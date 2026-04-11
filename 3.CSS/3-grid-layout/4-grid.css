@@ -35,9 +35,3 @@
   grid-area: footer;
   background-color: #fff475;
 }
-
-@media (width < 768px){
-  .site-header{
-    background-color: violet;
-  }
-}

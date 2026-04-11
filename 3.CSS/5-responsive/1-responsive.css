@@ -42,12 +42,6 @@ li{
 }
 
 @media (width < 768px){
-  .site-header{
-    background-color: violet;
-    }
-}
-
-@media (width < 768px){
   .layout{
     row-gap: 10px;
     grid-template:
