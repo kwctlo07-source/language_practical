@@ -1,0 +1,393 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* 全体レイアウト */
+.layout {
+  display: grid;
+  grid-template:
+    "header header header" auto
+    "side   ...... main  " minmax(200px, 1fr)
+    "footer footer footer" 50px
+    / 1fr 0px 5fr;
+}
+
+@media (width < 1080px) {
+  .layout {
+    grid-template:
+      "header" auto
+      "side" auto
+      "main" minmax(200px, 1fr)
+      "footer" auto
+      / 1fr;
+  }
+}
+
+.site-header {
+  grid-area: header;
+  background-color: #F5F6F8; 
+  border: 1px solid rgb(217 221 228 / 70%);
+}
+
+.sidebar {
+  grid-area: side;
+  background-color: #FAFBFC;
+  border: 1px solid rgb(217 221 228 / 70%);
+}
+
+.main {
+  grid-area: main;
+  background-color: #FFFFFF;
+  border: 1px solid rgb(217 221 228 / 70%);
+}
+
+.site-footer {
+  grid-area: footer;
+  background-color: #F5F6F8;
+  border: 1px solid rgb(217 221 228 / 70%);
+}
+
+/* ヘッダー */
+
+.site-header{
+  padding: 10px;
+}
+.circle{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #34d399;
+  color: white;
+  text-align: center;
+  line-height: 40px
+}
+
+/* サイドバー */
+
+.sidebar{
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.list{
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.list::before{
+  width: 8px;
+  height: 34px;
+  margin-right: 10px;
+  content: "";
+  background: #f28b82;
+}
+
+
+.list::after{
+  content: ">>";
+  margin-left: auto;
+}
+
+.list:hover{
+  translate: 0 -1px;
+  background: #F0F2F5;
+}
+
+.sidebar a,.sidebar a:visited{
+    color: black;
+    text-decoration: none;
+}
+
+@media (width < 1080px) {
+  .menu-trigger {
+    position: relative;
+    padding: 12px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 10;
+  }
+
+  .menu-trigger:hover .dropdown {
+    display: block;
+  }
+}
+
+@media (width >= 1080px) {
+  .menu-title {
+    display: none;
+  }
+}
+
+/* メイン */
+
+.design{
+  padding: 30px 30px;
+}
+
+/* カード */
+
+.box-demo {
+  place-content: center;
+  display: flex;
+  padding: 14px;
+  border: 1px dashed rgb(217 221 228 / 70%);
+  border-radius: 16px;
+}
+
+.box {
+  place-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  margin: 14px;
+  background: rgb(255 255 255 / 70%);
+  border: 2px solid rgb(217 221 228 / 70%);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgb(4 7 10 / 12%);
+}
+
+.ribbon {
+  display: inline-block;
+  padding: 4px 8px;
+  color: white;
+  background: #34d399;
+  border-radius: 8px;
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  font-weight: 800;
+  color: white;
+  background: #34d399;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgb(4 7 10 / 12%);
+}
+
+.btn:hover {
+  translate: 0 -1px;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn--ghost {
+  color: #1f2530;
+  background: transparent;
+  border: 1px solid rgb(217 221 228 / 70%);
+  box-shadow: none;
+}
+
+/* フォーム */
+
+.form{
+    border: 2px solid #C7EFE0;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+/* 名前入力 */
+.name{
+  padding: 8px;
+  outline: none;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #FAFBFC;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+input:focus{
+  border-color: #34d399;
+  box-shadow: 0 0 5px #34d399;
+}
+
+/* 性別選択 */
+
+.gender{
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #FAFBFC;
+  margin-bottom: 20px;
+}
+
+.gender h3{
+  margin: 0px;
+  padding: 10px 10px 8px;
+}
+
+.gender-radio{
+  display: flex;
+  padding: 8px 20px;
+  color: #969494;
+}
+
+label:has(input:checked) {
+  background: rgb(52 211 153 / 15%);
+  border: 1px solid #34d399;
+  border-radius: 8px;
+}
+
+/* 都道府県 */
+
+.prefecture{
+  padding: 8px;
+  outline: none;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #FAFBFC;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+select:focus{
+  border-color: #34d399;
+  box-shadow: 0 0 5px #34d399;
+}
+
+/* 完了課題 */
+
+.task{
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #FAFBFC;
+  margin-bottom: 20px;
+}
+
+.task h3{
+  margin: 0px;
+  padding: 10px 10px 8px;
+}
+
+.language{
+  display: flex;
+  padding: 8px 20px;
+  color: #969494;
+}
+
+/* 自己紹介 */
+
+.freebox{
+  outline: none;
+  padding: 8px;
+  width: 100%;
+  height: 100px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #FAFBFC;
+}
+
+textarea:focus{
+  border-color: #34d399;
+  box-shadow: 0 0 5px #34d399;
+}
+
+/* FlexBox */
+
+.flexbox{
+  padding: 30px 30px;
+}
+
+.buttun{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.flexbox-tag {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+}
+
+.buttun button:first-child{
+  background: #34d399;
+  color: white;
+}
+
+/* カードレイアウト */
+
+.card{
+  display: flex;
+  padding: 30px;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+@media (width < 720px) {
+  .card{
+    flex-direction: column;
+  }
+}
+
+ .carditem{
+  flex-direction: column;
+  gap: 8px;
+  width: stretch;
+  padding: 14px;
+  background: rgb(255 255 255 / 70%);
+  border: 2px solid rgb(217 221 228 / 70%);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgb(4 7 10 / 12%);
+}
+
+.carditem:hover{
+  border-color: #34d399;
+  box-shadow: 0 0 5px #34d399;
+}
+
+@media (width < 720px) {
+  .carditem{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+/* フッター */
+
+.site-footer{
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.backtop{
+  margin-left: auto;
+}

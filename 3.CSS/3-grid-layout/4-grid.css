@@ -1,0 +1,37 @@
+/* コンテナ要素のデザイン指定 */
+.layout {
+  display: grid;
+  grid-template:
+    "header header header" auto
+    "...... ...... ......" 10px
+    "side   ...... main  " minmax(200px, 1fr)
+    "...... ...... ......" 10px
+    "footer footer footer" auto
+    / 260px 10px 1fr;
+}
+
+/* アイテム要素のデザイン指定 */
+
+/* ヘッダー部分のデザイン */
+.site-header {
+  grid-area: header;
+  background-color: #f28b82;
+}
+
+/* サイドメニュー部分のデザイン */
+.sidebar {
+  grid-area: side;
+  background-color: #aecbfa;
+}
+
+/* メインコンテンツ部分のデザイン */
+.main {
+  grid-area: main;
+  background-color: #ccff90;
+}
+
+/* フッター部分のデザイン */
+.site-footer {
+  grid-area: footer;
+  background-color: #fff475;
+}
