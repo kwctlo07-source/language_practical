@@ -1,0 +1,5 @@
+sql_education=# select COUNT(order_date) as ２０２４年の注文数 from order_info where order_date < '2025-01-01';
+ ２０２４年の注文数
+--------------------
+                  2
+(1 行)

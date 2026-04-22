@@ -1,0 +1,6 @@
+sql_education=# select order_id as 注文ID from item left join order_item on order_item.item_id = item.item_id where name = 'にんじん' OR name = 'キャベツ';
+ 注文id
+--------
+      2
+      5
+(2 行)

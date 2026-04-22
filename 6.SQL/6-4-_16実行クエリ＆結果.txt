@@ -1,0 +1,103 @@
+今回の要件は注文を「キャンセルする概念」を追加し、注文全体のキャンセル、
+注文中の製品単位でのキャンセルを可能にするというものです。
+また、キャンセルした注文を後に確認できるようにします。
+この要件を満たすために、既成の「注文」テーブル、「注文製品」テーブルに追加の「キャンセルチェック」カラムを追加します。
+キャンセルチェックのカラムがTUREならキャンセル、FALSEなら未キャンセルとします。
+こうすることで、注文単位でのキャンセル、注文中の製品単位でのキャンセル、キャンセルした注文の確認が行えます。
+
+
+	テーブル名：
+		注文テーブル (order_info)
+	
+	テーブル構成：							
+		注文ID						order_info_id				注文のIDを入力します。
+		注文日						order_date					注文の日時を入力します。
+		アカウントID				account_id					注文したアカウントのIDを入力します。
+		キャンセル状態				cancelcheck					キャンセルの場合TUREを入力します(デフォルトはFALSE)。
+		
+	テーブル名：
+		注文製品テーブル (order_item)
+	
+	テーブル構成：							
+		ID							id							IDを入力します。
+		注文ID						order_info_id				注文のIDを入力します。
+		アイテムID					item_id						アイテムのIDを入力します。
+		注文数						quantity					アイテムの注文数を入力します。
+		キャンセル状態				cancelcheck					キャンセルの場合TUREを入力します(デフォルトはFALSE)。
+		
+		
+		キャンセル状態の変更について：
+			注文テーブルの注文ID、または注文製品テーブルの注文IDとアイテムIDを指定し
+			cancelchekカラムの状態をTUREにします。
+			
+SQLの解説：
+
+		注文全体のキャンセル：
+				sql_education=*# select * from order_info;
+				
+				 order_info_id | order_date | account_id | cancelcheck
+				---------------+------------+------------+-------------
+				             1 | 2024-12-30 |          1 | f
+				             2 | 2025-01-20 |          1 | f
+				             3 | 2024-12-31 |          2 | f
+				             4 | 2025-01-20 |          2 | f
+				             5 | 2025-04-01 |          2 | f
+
+
+				sql_education=*# update order_info set cancelcheck = TRUE where order_info_id = 1;		--注文IDが「1」の注文をキャンセル状態に変更
+				
+				UPDATE 1
+				sql_education=*# select * from order_info;
+				 order_info_id | order_date | account_id | cancelcheck
+				---------------+------------+------------+-------------
+				             2 | 2025-01-20 |          1 | f
+				             3 | 2024-12-31 |          2 | f
+				             4 | 2025-01-20 |          2 | f
+				             5 | 2025-04-01 |          2 | f
+				             1 | 2024-12-30 |          1 | t
+				        
+				             
+		注文中の製品単位でのキャンセル：
+				sql_education=*# select * from order_item;
+				
+				 id | order_id | item_id | quantity | cancelcheck
+				----+----------+---------+----------+-------------
+				  1 |        1 |       2 |        2 | f
+				  2 |        1 |       4 |        1 | f
+				  3 |        1 |       7 |        2 | f
+				  4 |        2 |       5 |        4 | f
+				  5 |        2 |       6 |        5 | f
+				  6 |        2 |       7 |        6 | f
+				  7 |        3 |       3 |       10 | f
+				  8 |        3 |       7 |        5 | f
+				  9 |        3 |       2 |        5 | f
+				 10 |        4 |       3 |       10 | f
+				 11 |        4 |       7 |        1 | f
+				 12 |        4 |       6 |        2 | f
+				 13 |        5 |       8 |        5 | f
+				 14 |        5 |       4 |        2 | f
+				 15 |        5 |       1 |        2 | f
+				(15 行)
+
+
+				sql_education=*# update order_item set cancelcheck = TRUE where item_id = 1 AND order_id = 5;		--注文IDが1「1」の、製品IDが「5」の注文をキャンセル
+				
+				UPDATE 1
+				sql_education=*# select * from order_item;
+				 id | order_id | item_id | quantity | cancelcheck
+				----+----------+---------+----------+-------------
+				  1 |        1 |       2 |        2 | f
+				  2 |        1 |       4 |        1 | f
+				  3 |        1 |       7 |        2 | f
+				  4 |        2 |       5 |        4 | f
+				  5 |        2 |       6 |        5 | f
+				  6 |        2 |       7 |        6 | f
+				  7 |        3 |       3 |       10 | f
+				  8 |        3 |       7 |        5 | f
+				  9 |        3 |       2 |        5 | f
+				 10 |        4 |       3 |       10 | f
+				 11 |        4 |       7 |        1 | f
+				 12 |        4 |       6 |        2 | f
+				 13 |        5 |       8 |        5 | f
+				 14 |        5 |       4 |        2 | f
+				 15 |        5 |       1 |        2 | t

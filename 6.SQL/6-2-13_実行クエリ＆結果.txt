@@ -1,0 +1,6 @@
+sql_education=# select account.account_id as ユーザーID,account.name as ユーザー名,sum(quantity*price) as 合計金額 from account left join order_info on order_info.account_id = account.account_id left join order_item on order_item.order_id = order_info.order_info_id left join item on item.item_id = order_item.item_id group by ユーザーID order by ユーザーID;
+ ユーザーid | ユーザー名 | 合計金額
+------------+------------+----------
+          1 | ac1        |     4782
+          2 | ac2        |    12050
+(2 行)
