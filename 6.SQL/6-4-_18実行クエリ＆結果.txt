@@ -1,0 +1,50 @@
+今回の要件は注文に「ステータス」の概念を追加するというものです。
+この要件を満たすために、「注文ステータス」テーブル、ステータスを管理する「ステータス」テーブルを追加します。
+こうすることで、注文した製品のステータス、ステータス自体の追加変更が行えます。
+
+
+	テーブル名：
+		ステータスマスタテーブル (status)
+	
+	テーブル構成：							
+		ステータスID				status_id					ステータスのIDを入力します。
+		ステータス名				status_name					ステータスの名前を入力します。
+		
+	テーブル名：
+		注文ステータステーブル (order_status)
+	
+	テーブル構成：							
+		注文ステータスID			order_status_id				注文ステータスのIDを入力します。
+		ID							id							注文のIDを入力します。
+		ステータス名				status_name					ステータスの名前を入力します。
+		
+		
+			
+			
+SQLの解説：
+
+		ステータスの追加：
+				sql_education=# select * from status;	--ステータスマスタテーブル
+				
+				 status_id | status_name
+				-----------+-------------
+				         1 | 受付済
+				         2 | 発注済
+				         3 | 在庫確保済
+				         4 | 処理済
+
+
+				sql_education=*# insert into order_status(id,status_id) values(1,1);	--注文製品ID「1」に紐づけてステータス「1」（受付済み）ステータスを登録
+				
+				INSERT 0 1
+				sql_education=*# select * from order_status;
+				 order_status_id | id | status_id
+				-----------------+----+-----------
+				               2 |  1 |         1
+				        
+				             
+		ステータスの確認：
+				sql_education=# select * from order_item left join order_status on order_status.id = order_item.id left join status on status.status_id = order_status.status_id where order_item.id  = 1;	--受付済みステータスを登録した注文製品ID「1」の情報を取得
+				 id | order_id | item_id | quantity | cancelcheck | shop_id | order_status_id | id | status_id | status_id | status_name
+				----+----------+---------+----------+-------------+---------+-----------------+----+-----------+-----------+-------------
+				  1 |        1 |       2 |        2 | f           |       1 |               2 |  1 |         1 |         1 | 受付済

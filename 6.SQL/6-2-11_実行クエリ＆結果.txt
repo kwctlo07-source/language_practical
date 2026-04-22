@@ -1,0 +1,12 @@
+sql_education=# select item.name as 製品名,sum(quantity) as 注文合計数 from order_item left join item on item.item_id = order_item.item_id group by item.item_id;
+     製品名     | 注文合計数
+----------------+------------
+ 米             |          3
+ バナナ         |          7
+ 食パン         |          7
+ 卵             |         20
+ にんじん       |          4
+ カップラーメン |         14
+ 牛乳           |          2
+ キャベツ       |          5
+(8 行)
